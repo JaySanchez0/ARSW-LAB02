@@ -91,6 +91,8 @@ public class ControlFrame extends JFrame {
                 /*
 				 * COMPLETAR
                  */
+            	
+            	for (Immortal im : immortals) im.pause();
                 int sum = 0;
                 for (Immortal im : immortals) {
                     sum += im.getHealth();
@@ -111,6 +113,7 @@ public class ControlFrame extends JFrame {
                 /**
                  * IMPLEMENTAR
                  */
+            	for(Immortal im:immortals) im.restart();
 
             }
         });

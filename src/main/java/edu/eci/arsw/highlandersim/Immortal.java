@@ -16,7 +16,8 @@ public class Immortal extends Thread {
     private final String name;
 
     private final Random r = new Random(System.currentTimeMillis());
-
+    
+    private boolean pause;
 
     public Immortal(String name, List<Immortal> immortalsPopulation, int health, int defaultDamageValue, ImmortalUpdateReportCallback ucb) {
         super(name);
@@ -30,6 +31,13 @@ public class Immortal extends Thread {
     public void run() {
 
         while (true) {
+        	if(pause) {
+        		try {
+					synchronized(this) { wait();}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+        	}
             Immortal im;
 
             int myIndex = immortalsPopulation.indexOf(this);
@@ -55,15 +63,16 @@ public class Immortal extends Thread {
 
     }
 
-    public void fight(Immortal i2) {
-
+    public synchronized void fight(Immortal i2) {
         if (i2.getHealth() > 0) {
+        
             i2.changeHealth(i2.getHealth() - defaultDamageValue);
             this.health += defaultDamageValue;
             updateCallback.processReport("Fight: " + this + " vs " + i2+"\n");
         } else {
             updateCallback.processReport(this + " says:" + i2 + " is already dead!\n");
-        }
+    	}
+        
 
     }
 
@@ -80,5 +89,15 @@ public class Immortal extends Thread {
 
         return name + "[" + health + "]";
     }
+    
+    public void pause() {
+    	this.pause = true;
+    }
+    
+    public synchronized void restart() {
+    	notifyAll();
+    	this.pause = false;
+    }
+    
 
 }
