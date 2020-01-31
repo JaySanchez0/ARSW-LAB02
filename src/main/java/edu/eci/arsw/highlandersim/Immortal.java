@@ -1,5 +1,6 @@
 package edu.eci.arsw.highlandersim;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -26,12 +27,11 @@ public class Immortal extends Thread {
         this.immortalsPopulation = immortalsPopulation;
         this.health = health;
         this.defaultDamageValue=defaultDamageValue;
-        System.out.println("Creo immortal");
     }
 
     public void run() {
 
-        while (true) {
+        while (health>0 && immortalsPopulation.size()>0) {
         	if(pause) {
         		try {
 					synchronized(this) { wait();}
@@ -41,27 +41,28 @@ public class Immortal extends Thread {
         	}
             Immortal im;
 
-            int myIndex = immortalsPopulation.indexOf(this);
+            int myIndex = (immortalsPopulation).indexOf(this);
 
             int nextFighterIndex = r.nextInt(immortalsPopulation.size());
 
             //avoid self-fight
-            if (nextFighterIndex == myIndex) {
-                nextFighterIndex = ((nextFighterIndex + 1) % immortalsPopulation.size());
-            }
-
-            im = immortalsPopulation.get(nextFighterIndex);
-
-            this.fight(im);
+	            if (nextFighterIndex == myIndex) {
+	                nextFighterIndex = ((nextFighterIndex + 1) % immortalsPopulation.size());
+	            }
+	            im = immortalsPopulation.get(nextFighterIndex);
+	            this.fight(im);
 
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
-
+        if(health<=0) {
+        	synchronized(immortalsPopulation) {
+        		immortalsPopulation.remove(this);
+        	}
+        }
     }
 
     public void fight(Immortal i2) {

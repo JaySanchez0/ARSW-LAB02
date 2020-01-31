@@ -2,6 +2,8 @@ package edu.eci.arsw.highlandersim;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -91,13 +93,13 @@ public class ControlFrame extends JFrame {
                 /*
 				 * COMPLETAR
                  */
-            	
-            	for (Immortal im : immortals) im.pause();
-                int sum = 0;
-                for (Immortal im : immortals) {
-                    sum += im.getHealth();
-                }
-
+            	int sum = 0;
+            	synchronized(immortals) {
+	            	for (Immortal im : immortals) im.pause();
+	                for (Immortal im : immortals) {
+	                    sum += im.getHealth();
+	                }
+            	}
                 statisticsLabel.setText("<html>"+immortals.toString()+"<br>Health sum:"+ sum);
                 
                 
@@ -129,6 +131,15 @@ public class ControlFrame extends JFrame {
         numOfImmortals.setColumns(10);
 
         JButton btnStop = new JButton("STOP");
+        btnStop.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				for(Immortal im:immortals) im.stop();
+				btnStart.setEnabled(true);
+				
+			}
+        });
         btnStop.setForeground(Color.RED);
         toolBar.add(btnStop);
 
