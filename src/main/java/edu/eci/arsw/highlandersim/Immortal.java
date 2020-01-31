@@ -26,6 +26,7 @@ public class Immortal extends Thread {
         this.immortalsPopulation = immortalsPopulation;
         this.health = health;
         this.defaultDamageValue=defaultDamageValue;
+        System.out.println("Creo immortal");
     }
 
     public void run() {
@@ -63,20 +64,23 @@ public class Immortal extends Thread {
 
     }
 
-    public synchronized void fight(Immortal i2) {
-        if (i2.getHealth() > 0) {
-        
-            i2.changeHealth(i2.getHealth() - defaultDamageValue);
-            this.health += defaultDamageValue;
-            updateCallback.processReport("Fight: " + this + " vs " + i2+"\n");
-        } else {
-            updateCallback.processReport(this + " says:" + i2 + " is already dead!\n");
+    public void fight(Immortal i2) {
+    	synchronized(immortalsPopulation) {
+	        if (i2.getHealth() > 0) {
+	            i2.changeHealth(i2.getHealth() - defaultDamageValue);
+	            this.health += defaultDamageValue;
+	            updateCallback.processReport("Fight: " + this + " vs " + i2+"\n");
+	        } else {
+	            updateCallback.processReport(this + " says:" + i2 + " is already dead!\n");
+	    	}
     	}
-        
-
     }
 
-    public void changeHealth(int v) {
+    private boolean isPause() {
+		return pause;
+	}
+
+	public void changeHealth(int v) {
         health = v;
     }
 
