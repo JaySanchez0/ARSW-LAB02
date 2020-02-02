@@ -73,11 +73,12 @@ public class ControlFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 immortals = setupInmortals();
-
+                synchronized(immortals) {
                 if (immortals != null) {
                     for (Immortal im : immortals) {
                         im.start();
                     }
+                }
                 }
 
                 btnStart.setEnabled(false);
@@ -135,9 +136,10 @@ public class ControlFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				for(Immortal im:immortals) im.stop();
+					for(Immortal im:immortals) {
+						im.stop();
+					}
 				btnStart.setEnabled(true);
-				
 			}
         });
         btnStop.setForeground(Color.RED);

@@ -40,7 +40,6 @@ public class Immortal extends Thread {
 				}
         	}
             Immortal im;
-
             int myIndex = (immortalsPopulation).indexOf(this);
 
             int nextFighterIndex = r.nextInt(immortalsPopulation.size());
