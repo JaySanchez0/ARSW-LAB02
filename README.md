@@ -1,6 +1,6 @@
 # ARSW-LAB02
 
-###Integrantes
+### Integrantes
 
 - Jeisson Sanchez
 - Mateo Gonzalez
