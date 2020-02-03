@@ -1,5 +1,22 @@
 # ARSW-LAB02
 
+*Jeisson Sanchez
+*Mateo Gonzalez
+
+**Compilar**
+
+~~~
+mvn -U package
+~~~
+
+**Ejecutar:**
+
+~~~
+mvn exec:java -Dexec.mainClass="edu.eci.arsw.highlandersim.ControlFrame"
+~~~
+
+## Solucion:
+
 **Parte I**
 
 1. Control de hilos con esperar / notificar. Productor / consumidor
