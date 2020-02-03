@@ -1,9 +1,9 @@
 # ARSW-LAB02
 
-##Integrantes
+###Integrantes
 
--Jeisson Sanchez
--Mateo Gonzalez
+- Jeisson Sanchez
+- Mateo Gonzalez
 
 **Compilar**
 
