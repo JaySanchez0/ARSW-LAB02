@@ -5,6 +5,33 @@
 - Jeisson Sanchez
 - Mateo Gonzalez
 
+
+## Solucion:
+
+**Parte I**
+
+**Compilar**
+
+~~~
+mvn -U package
+~~~
+
+**Ejecutar:**
+
+~~~
+mvn exec:java -Dexec.mainClass="edu.eci.arst.concprg.prodcons.StartProduction"
+~~~
+
+
+1. Control de hilos con esperar / notificar. Productor / consumidor
+Verifique el funcionamiento del programa y ejecútelo. Mientras esto ocurre, ejecute jVisualVM y verifique el consumo de CPU del proceso correspondiente. 
+![img](img/1a.PNG) <br><br> **¿Por qué es este consumo?** Tanto el consumidor como el productor estan realizando operaciones sobre la memoria añadir y quitar elementos de una pila. <br><br>**¿Cuál es la clase responsable?** Son responsables tanto el consumidor como productor dado a que ambos acceden a los mismos datos. <br><br>
+
+2. Haga lo necesario para ajustar el consumo de cpu mas eficiente, verifica en JVisualVM <br> <br>![img2](img/2a.PNG)
+3. Haga que el productor ahora produzca muy rápido, y el consumidor consume lentamente. Teniendo en cuenta que el productor conoce un límite de existencias (cuántos elementos debería tener, como máximo en la cola), hace que se respete ese límite. Revise la API de la colección utilizada como cola para ver cómo asegurarse de que no se supere este límite. Verifique que, al establecer un pequeño límite para el 'stock', no haya un alto consumo de CPU o errores.
+
+**Parte II**
+
 **Compilar**
 
 ~~~
@@ -17,18 +44,6 @@ mvn -U package
 mvn exec:java -Dexec.mainClass="edu.eci.arsw.highlandersim.ControlFrame"
 ~~~
 
-## Solucion:
-
-**Parte I**
-
-1. Control de hilos con esperar / notificar. Productor / consumidor
-Verifique el funcionamiento del programa y ejecútelo. Mientras esto ocurre, ejecute jVisualVM y verifique el consumo de CPU del proceso correspondiente. 
-![img](img/1a.PNG) <br><br> **¿Por qué es este consumo?** Tanto el consumidor como el productor estan realizando operaciones sobre la memoria añadir y quitar elementos de una pila. <br><br>**¿Cuál es la clase responsable?** Son responsables tanto el consumidor como productor dado a que ambos acceden a los mismos datos. <br><br>
-
-2. Haga lo necesario para ajustar el consumo de cpu mas eficiente, verifica en JVisualVM <br> <br>![img2](img/2a.PNG)
-3. Haga que el productor ahora produzca muy rápido, y el consumidor consume lentamente. Teniendo en cuenta que el productor conoce un límite de existencias (cuántos elementos debería tener, como máximo en la cola), hace que se respete ese límite. Revise la API de la colección utilizada como cola para ver cómo asegurarse de que no se supere este límite. Verifique que, al establecer un pequeño límite para el 'stock', no haya un alto consumo de CPU o errores.
-
-**Parte II**
 1. Revisa “highlander-simulator”
 2. Revise el código e identifique cómo se implementó la funcionalidad indicada anteriormente. Dada la intención del juego, una invariante debería ser que la suma de los puntos de vida de todos los jugadores sea siempre la misma (por supuesto, en un instante de tiempo en el que no se está procesando una operación de aumento / reducción de tiempo). Para este caso, para N jugadores, ¿cuál debería ser este valor? <br><br> La Sumatroia de las vidas de los N jugadores deberia ser 100*N
 
